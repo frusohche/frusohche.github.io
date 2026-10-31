@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "date": "2026-10-31",
+    "summary": "Heads-down day on Tax, with a couple of updates to Planner.",
+    "items": [
+      "Tax: 13 commits",
+      "Planner: 2 commits"
+    ]
+  }
+]
