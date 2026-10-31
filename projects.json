@@ -13,44 +13,68 @@
       "This site is the home base for everything I build — what's live, what's in progress, and what's next."
     ],
     "links": [
-      { "label": "GitHub", "url": "https://github.com/frusohche" },
-      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/frusoh-che-67a50a1a7" },
-      { "label": "Email", "url": "mailto:harrische0@gmail.com" }
+      {
+        "label": "GitHub",
+        "url": "https://github.com/frusohche"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/frusoh-che-67a50a1a7"
+      },
+      {
+        "label": "Email",
+        "url": "mailto:harrische0@gmail.com"
+      }
     ]
   },
-
   "projects": [
     {
       "name": "Planner",
+      "repo": "frusohche/PLANNER-",
       "status": "in-progress",
       "year": 2026,
       "description": "A personal planner for organizing tasks, schedules and goals in one place.",
-      "tags": ["Productivity", "Web"],
+      "tags": [
+        "Productivity",
+        "Web"
+      ],
       "links": [],
       "featured": true
     },
     {
       "name": "DJ",
+      "repo": "frusohche/Auto-DJ",
       "status": "in-progress",
       "year": 2026,
-      "description": "A music project for building and managing DJ sets.",
-      "tags": ["Music", "Tools"],
+      "description": "Mixes a Spotify playlist like an Afrobeats DJ.",
+      "tags": [
+        "Music",
+        "Tools"
+      ],
       "links": []
     },
     {
       "name": "Trading Routine",
+      "repo": "frusohche/TRADING-ROUTINE",
       "status": "in-progress",
       "year": 2026,
       "description": "A daily trading routine — checklists, notes and review in a repeatable system.",
-      "tags": ["Finance", "Automation"],
+      "tags": [
+        "Finance",
+        "Automation"
+      ],
       "links": []
     },
     {
       "name": "Tax",
+      "repo": "frusohche/tax-agent",
       "status": "in-progress",
       "year": 2026,
       "description": "A tool for organizing documents and numbers for tax season.",
-      "tags": ["Finance", "Tools"],
+      "tags": [
+        "Finance",
+        "Tools"
+      ],
       "links": []
     }
   ]

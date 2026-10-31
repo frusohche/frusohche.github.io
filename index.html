@@ -137,6 +137,10 @@
       <div id="now" class="reveal scroll-mt-28 rounded-3xl border border-tide/20 bg-void-700 p-8 shadow-floating">
         <p class="eyebrow">Right now</p>
         <h2 class="display mt-3 font-display text-4xl font-800 uppercase">Currently building</h2>
+        <div id="weekWrap" class="mt-6 hidden">
+          <p class="text-xs font-700 uppercase tracking-[.16em] text-ink-faint">This week on GitHub</p>
+          <ul class="mt-3 space-y-2" data-list="week"></ul>
+        </div>
         <ul class="mt-6 space-y-4" data-list="now"></ul>
       </div>
       <div id="about" class="reveal scroll-mt-28 rounded-3xl border border-white/5 bg-void-800 p-8 shadow-elevated">
@@ -144,6 +148,15 @@
         <h2 class="display mt-3 font-display text-4xl font-800 uppercase">Solve it for me.<br><span class="text-tide">Then ship it.</span></h2>
         <div class="mt-6 space-y-4 text-ink-muted" data-list="about"></div>
       </div>
+    </section>
+
+    <!-- Daily log (written each night by a scheduled Claude routine → log.json) -->
+    <section id="log" class="mx-auto hidden max-w-6xl scroll-mt-28 px-4 pb-section-sm sm:px-6 lg:pb-section">
+      <div class="reveal mb-10">
+        <p class="eyebrow">Shipped daily</p>
+        <h2 class="display mt-3 font-display text-5xl font-800 uppercase sm:text-6xl">Build log</h2>
+      </div>
+      <ol class="relative space-y-6 border-l border-tide/20 pl-6 sm:pl-8" data-list="log"></ol>
     </section>
 
     <!-- Contact -->
@@ -209,8 +222,26 @@
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
     const watch = (root = document) => root.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
 
+    const ago = (iso) => {
+      const day = (t) => { const x = new Date(t); x.setHours(0, 0, 0, 0); return x; }; // calendar days in the viewer's timezone
+      const d = Math.round((day(Date.now()) - day(iso)) / 864e5);
+      return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d < 30 ? `${d}d ago` : new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    };
+    const fmtDay = (ymd) => new Date(`${ymd}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+
+    function activityLine(a) {
+      if (!a?.lastActive) return '';
+      const hot = a.commitsToday > 0;
+      return `<p class="mt-4 flex items-center gap-2 text-xs font-600 ${hot ? 'text-tide-300' : 'text-ink-faint'}">
+        <span class="relative flex h-1.5 w-1.5">${hot ? '<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-tide-400 opacity-60"></span>' : ''}<span class="relative inline-flex h-1.5 w-1.5 rounded-full ${hot ? 'bg-tide-400' : 'bg-ink-faint'}"></span></span>
+        Active ${ago(a.lastActive)}${a.commitsWeek ? ` · ${plural(a.commitsWeek, 'commit')} this week` : ''}</p>`;
+    }
+
     function projectCard(p, i) {
       const s = STATUS[p.status] || STATUS.idea;
+      const a = p.activity;
+      if (a?.url && !(p.links || []).length) p.links = [{ label: 'Code', url: a.url }];
       const media = p.image
         ? `<img src="${esc(p.image)}" alt="" loading="lazy"><div class="tint"></div><div class="shade"></div>`
         : `<div class="cover absolute inset-0"></div><div class="cover-grid absolute inset-0"></div><span class="monogram" aria-hidden="true">${esc(p.name).slice(0, 2)}</span>`;
@@ -224,14 +255,34 @@
               ${p.year ? `<span class="text-xs font-600 text-ink-faint">${esc(p.year)}</span>` : ''}
             </div>
             <p class="mt-3 flex-1 text-sm text-ink-muted">${esc(p.description)}</p>
+            ${activityLine(a)}
             ${(p.tags || []).length ? `<div class="mt-5 flex flex-wrap gap-2">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
             ${links ? `<div class="mt-5 flex flex-wrap gap-5 border-t border-white/5 pt-4">${links}</div>` : ''}
           </div>
         </article>`;
     }
 
-    function render(data) {
+    function render([data, activity, log]) {
       const { profile = {}, projects = [] } = data;
+      projects.forEach((p) => { p.activity = activity?.projects?.[p.name]; });
+
+      const week = projects.filter((p) => p.activity?.commitsWeek).sort((a, b) => b.activity.commitsWeek - a.activity.commitsWeek);
+      document.getElementById('weekWrap').classList.toggle('hidden', !week.length);
+      document.querySelector('[data-list="week"]').innerHTML = week.map((p) => `
+        <li class="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-void-800 px-4 py-2.5 text-sm">
+          <span class="font-600 text-ink">${esc(p.name)}</span>
+          <span class="font-display text-lg font-700 text-tide">${plural(p.activity.commitsWeek, 'commit')}</span>
+        </li>`).join('');
+
+      const days = Array.isArray(log) ? log.slice(0, 7) : [];
+      document.getElementById('log').classList.toggle('hidden', !days.length);
+      document.querySelector('[data-list="log"]').innerHTML = days.map((d) => `
+        <li class="reveal relative">
+          <span class="absolute -left-[1.86rem] top-2 h-3 w-3 rotate-45 border-2 border-tide bg-void sm:-left-[2.36rem]"></span>
+          <p class="font-display text-xl font-700 uppercase tracking-wide text-tide">${esc(fmtDay(d.date))}</p>
+          ${d.summary ? `<p class="mt-1 text-ink">${esc(d.summary)}</p>` : ''}
+          ${(d.items || []).length ? `<ul class="mt-3 space-y-2">${d.items.map((t) => `<li class="now-item text-sm text-ink-muted">${esc(t)}</li>`).join('')}</ul>` : ''}
+        </li>`).join('');
       document.querySelectorAll('[data-bind]').forEach((el) => {
         const v = el.dataset.bind === 'activeCount' ? projects.filter((p) => p.status === 'in-progress').length : profile[el.dataset.bind];
         if (v !== undefined) el.textContent = v;
@@ -241,8 +292,9 @@
       document.querySelector('[data-list="about"]').innerHTML = (profile.about || []).map((t) => `<p>${esc(t)}</p>`).join('');
       document.querySelector('[data-list="links"]').innerHTML = (profile.links || []).map((l, i) => `<a href="${esc(l.url)}" class="${i === 0 ? 'btn-primary' : 'btn-ghost'} px-6 py-3" ${l.url.startsWith('mailto:') ? '' : 'target="_blank" rel="noopener"'}>${esc(l.label)}</a>`).join('');
 
-      // Featured first, then newest
-      const sorted = [...projects].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.year || 0) - (a.year || 0));
+      // Featured first, then most recently active, then newest
+      const last = (p) => (p.activity?.lastActive ? Date.parse(p.activity.lastActive) : 0);
+      const sorted = [...projects].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || last(b) - last(a) || (b.year || 0) - (a.year || 0));
       const used = Object.keys(STATUS).filter((k) => sorted.some((p) => p.status === k));
       const filters = document.getElementById('filters');
       filters.innerHTML = [['all', 'All', sorted.length], ...used.map((k) => [k, STATUS[k].label, sorted.filter((p) => p.status === k).length])]
@@ -266,8 +318,9 @@
       show('all');
     }
 
-    fetch('projects.json', { cache: 'no-store' })
-      .then((r) => r.json())
+    // activity.json and log.json are optional — the page still renders without them
+    const optional = (url) => fetch(url, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    Promise.all([fetch('projects.json', { cache: 'no-store' }).then((r) => r.json()), optional('activity.json'), optional('log.json')])
       .then(render)
       .catch(() => {
         const empty = document.getElementById('emptyState');
