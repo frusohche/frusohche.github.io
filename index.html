@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambition — Projects</title>
+  <meta name="description" content="Home base for everything I build.">
+  <link rel="icon" href="brand_assets/ambition-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Sampled from brand_assets/ambition-logo.jpg
+            void: { DEFAULT: '#04070c', 900: '#04070c', 800: '#080d14', 700: '#0d141d', 600: '#15202b' },
+            tide: { DEFAULT: '#00b0aa', 300: '#5fe0da', 400: '#1fc9c2', 500: '#00b0aa', 600: '#008a85', 700: '#00615e', 900: '#032624' },
+            ember: { DEFAULT: '#f0a840' },
+            ink: { DEFAULT: '#e6f2f1', muted: '#8fa4a6', faint: '#56686b' },
+          },
+          fontFamily: {
+            display: ['"Saira Condensed"', 'sans-serif'],
+            sans: ['Manrope', 'sans-serif'],
+          },
+          fontWeight: { 600: '600', 700: '700', 800: '800' },
+          // Layered, tide-tinted depth: base → elevated → floating
+          boxShadow: {
+            elevated: '0 1px 0 rgb(255 255 255 / .04) inset, 0 2px 4px rgb(0 0 0 / .35), 0 12px 32px -8px rgb(0 176 170 / .12)',
+            floating: '0 1px 0 rgb(255 255 255 / .06) inset, 0 4px 10px rgb(0 0 0 / .4), 0 24px 60px -12px rgb(0 176 170 / .28)',
+            cta: '0 1px 0 rgb(255 255 255 / .35) inset, 0 6px 16px -4px rgb(0 176 170 / .55), 0 18px 40px -12px rgb(0 176 170 / .45)',
+          },
+          spacing: { 'section': '7.5rem', 'section-sm': '5rem' },
+          transitionTimingFunction: { spring: 'cubic-bezier(.34,1.56,.64,1)', out: 'cubic-bezier(.22,1,.36,1)' },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root { --tide: 0 176 170; }
+    html { background: #04070c; scroll-behavior: smooth; }
+    body { line-height: 1.7; }
+    .display { letter-spacing: -0.03em; line-height: .92; }
+    .grain::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .07; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .glow-field {
+      background:
+        radial-gradient(60% 50% at 72% 38%, rgb(var(--tide) / .20), transparent 70%),
+        radial-gradient(35% 30% at 15% 80%, rgb(var(--tide) / .08), transparent 70%),
+        radial-gradient(80% 60% at 50% 0%, rgb(13 20 29 / .9), transparent 70%);
+    }
+    .logo-fade { -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+    .hairline { background: linear-gradient(90deg, transparent, rgb(var(--tide) / .45), transparent); }
+    .cover {
+      background:
+        radial-gradient(70% 90% at 85% 10%, rgb(var(--tide) / .35), transparent 60%),
+        radial-gradient(60% 70% at 10% 100%, rgb(var(--tide) / .12), transparent 70%),
+        linear-gradient(160deg, #0d141d, #080d14);
+    }
+    .cover-grid { background-image: linear-gradient(rgb(255 255 255 / .04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .04) 1px, transparent 1px); background-size: 28px 28px; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.34,1.56,.64,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body class="grain bg-void font-sans text-ink antialiased overflow-x-hidden">
+
+  <!-- Nav (floating layer) -->
+  <header class="fixed inset-x-0 top-0 z-50">
+    <nav class="mx-4 mt-4 flex max-w-6xl items-center justify-between rounded-2xl border border-white/5 bg-void-800/70 px-5 py-3 shadow-floating backdrop-blur-xl sm:mx-6 lg:mx-auto" aria-label="Main">
+      <a href="#top" class="flex items-center gap-3 rounded-md font-display text-2xl font-800 uppercase tracking-wide text-tide transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-4 focus-visible:ring-offset-void-800 active:opacity-60" data-bind="brand">Ambition</a>
+      <ul class="hidden items-center gap-8 text-sm font-600 text-ink-muted md:flex">
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#now" class="nav-link">Now</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+      </ul>
+      <a href="#contact" class="btn-primary hidden px-5 py-2 text-sm sm:inline-flex">Get in touch</a>
+      <button id="menuBtn" class="icon-btn md:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="mx-4 mt-2 hidden rounded-2xl border border-white/5 bg-void-800/95 p-4 shadow-floating backdrop-blur-xl md:hidden">
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#now" class="mobile-link">Now</a>
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#contact" class="btn-primary mt-3 w-full px-5 py-3 text-sm">Get in touch</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="relative isolate overflow-hidden pt-28 sm:pt-32">
+      <div class="glow-field absolute inset-0 -z-10"></div>
+      <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:pb-20">
+        <div class="order-2 lg:order-1">
+          <p class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-tide/25 bg-tide-900/40 px-3 py-1 text-xs font-700 uppercase tracking-[.18em] text-tide-300">
+            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-tide-400 opacity-60"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-tide-400"></span></span>
+            <span><span data-bind="activeCount">0</span> projects in motion</span>
+          </p>
+          <h1 class="reveal display font-display text-[clamp(3.25rem,10vw,7rem)] font-800 uppercase">
+            <span class="block text-ink-muted text-[.42em] tracking-normal mb-3">Hi, I'm <span class="text-ink" data-bind="name">Your Name</span></span>
+            I build with<br><span class="text-tide">Ambition.</span>
+          </h1>
+          <p class="reveal mt-6 max-w-md text-lg text-ink-muted" data-bind="tagline"></p>
+          <div class="reveal mt-10 flex flex-wrap gap-4">
+            <a href="#projects" class="btn-primary px-7 py-3.5">See my projects</a>
+            <a href="#contact" class="btn-ghost px-7 py-3.5">Get in touch</a>
+          </div>
+        </div>
+        <div class="reveal order-1 mx-auto w-full max-w-[18rem] sm:max-w-sm lg:order-2 lg:-my-8 lg:max-w-[30rem]">
+          <img src="brand_assets/ambition-logo.jpg" alt="Ambition logo" class="logo-fade w-full select-none" width="1024" height="1536">
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="mx-auto max-w-6xl scroll-mt-28 px-4 py-section-sm sm:px-6 lg:pb-section lg:pt-16">
+      <div class="reveal mb-10 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">The work</p>
+          <h2 class="display mt-3 font-display text-5xl font-800 uppercase sm:text-6xl">Projects</h2>
+        </div>
+        <div class="flex flex-wrap gap-2" role="toolbar" aria-label="Filter projects by status" id="filters"></div>
+      </div>
+      <div id="projectGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+      <p id="emptyState" class="hidden rounded-2xl border border-dashed border-white/10 px-6 py-12 text-center text-ink-muted">Nothing here yet.</p>
+    </section>
+
+    <div class="hairline mx-auto h-px max-w-6xl"></div>
+
+    <!-- Now + About -->
+    <section class="mx-auto grid max-w-6xl gap-6 px-4 py-section-sm sm:px-6 lg:grid-cols-[1fr_1.3fr] lg:py-section">
+      <div id="now" class="reveal scroll-mt-28 rounded-3xl border border-tide/20 bg-void-700 p-8 shadow-floating">
+        <p class="eyebrow">Right now</p>
+        <h2 class="display mt-3 font-display text-4xl font-800 uppercase">Currently building</h2>
+        <ul class="mt-6 space-y-4" data-list="now"></ul>
+      </div>
+      <div id="about" class="reveal scroll-mt-28 rounded-3xl border border-white/5 bg-void-800 p-8 shadow-elevated">
+        <p class="eyebrow">About</p>
+        <h2 class="display mt-3 font-display text-4xl font-800 uppercase">Solve it for me.<br><span class="text-tide">Then ship it.</span></h2>
+        <div class="mt-6 space-y-4 text-ink-muted" data-list="about"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="scroll-mt-28 px-4 pb-section-sm sm:px-6 lg:pb-section">
+      <div class="reveal relative isolate mx-auto max-w-6xl overflow-hidden rounded-3xl border border-tide/20 bg-void-700 px-6 py-16 text-center shadow-floating sm:px-12">
+        <div class="glow-field absolute inset-0 -z-10 opacity-90"></div>
+        <h2 class="display font-display text-[clamp(2.75rem,8vw,5.5rem)] font-800 uppercase">Let's <span class="text-tide">build.</span></h2>
+        <p class="mx-auto mt-5 max-w-lg text-ink-muted">Got an idea, a question, or something worth collaborating on? Reach out.</p>
+        <div class="mt-10 flex flex-wrap justify-center gap-3" data-list="links"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/5 px-4 py-10 sm:px-6">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
+      <p class="font-display text-xl font-800 uppercase text-tide" data-bind="brand">Ambition</p>
+      <p class="text-sm text-ink-faint">© <span id="year"></span> <span data-bind="name">Your Name</span></p>
+    </div>
+  </footer>
+
+  <style type="text/tailwindcss">
+    @layer components {
+      .btn-primary { @apply inline-flex items-center justify-center rounded-xl bg-tide font-display text-lg font-700 uppercase tracking-wide text-void shadow-cta transition-[transform,opacity] duration-300 ease-spring hover:-translate-y-0.5 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-300 focus-visible:ring-offset-4 focus-visible:ring-offset-void active:translate-y-0 active:scale-[.97] active:opacity-90; }
+      .btn-ghost { @apply inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[.03] font-display text-lg font-700 uppercase tracking-wide text-ink shadow-elevated transition-[transform,opacity] duration-300 ease-spring hover:-translate-y-0.5 hover:border-tide/40 hover:text-tide-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-4 focus-visible:ring-offset-void active:translate-y-0 active:scale-[.97]; }
+      .icon-btn { @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.03] text-ink-muted transition-[transform,opacity] duration-300 ease-spring hover:-translate-y-0.5 hover:text-tide-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 active:scale-90; }
+      .nav-link { @apply relative rounded-md py-1 transition-opacity duration-200 hover:text-ink focus-visible:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-4 focus-visible:ring-offset-void-800 active:opacity-60; }
+      .nav-link::after { content: ''; @apply absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-tide transition-transform duration-300 ease-out; }
+      .nav-link:hover::after, .nav-link:focus-visible::after { @apply scale-x-100; }
+      .mobile-link { @apply block rounded-lg px-3 py-3 font-600 text-ink-muted transition-opacity hover:bg-white/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 active:opacity-60; }
+      .eyebrow { @apply text-xs font-700 uppercase tracking-[.2em] text-tide-400; }
+      .chip { @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.03] px-4 py-1.5 text-sm font-600 text-ink-muted transition-[transform,opacity] duration-300 ease-spring hover:-translate-y-0.5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 active:scale-95; }
+      .chip[aria-pressed="true"] { @apply border-tide/50 bg-tide-900/60 text-tide-300; }
+      .chip-count { @apply rounded-full bg-white/5 px-1.5 text-xs text-ink-faint; }
+      .card { @apply relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-void-800 shadow-elevated transition-[transform,opacity] duration-500 ease-spring hover:-translate-y-1.5; }
+      .card:focus-within { @apply border-tide/40; }
+      .media { @apply relative h-44 overflow-hidden lg:h-52; }
+      .media img { @apply h-full w-full object-cover transition-transform duration-700 ease-out; }
+      .card:hover .media img { @apply scale-105; }
+      .media .tint { @apply absolute inset-0 bg-tide-700 mix-blend-multiply opacity-40; }
+      .media .shade { @apply absolute inset-0 bg-gradient-to-t from-black/60 to-transparent; }
+      .monogram { @apply absolute bottom-3 left-5 font-display text-8xl font-800 uppercase leading-none text-tide/25 transition-transform duration-700 ease-spring; letter-spacing: -0.03em; }
+      .card:hover .monogram { @apply -translate-y-1; }
+      .status { @apply absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-void/80 px-2.5 py-1 text-[11px] font-700 uppercase tracking-[.12em] backdrop-blur; }
+      .status::before { content: ''; @apply h-1.5 w-1.5 rounded-full bg-current; }
+      .tag { @apply rounded-md border border-white/5 bg-white/[.03] px-2 py-0.5 text-xs font-600 text-ink-muted; }
+      .card-link { @apply inline-flex items-center gap-1.5 rounded-md font-display text-base font-700 uppercase tracking-wide text-tide transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-2 focus-visible:ring-offset-void-800 active:opacity-60; }
+      .card-link span { @apply inline-block transition-transform duration-300 ease-spring; }
+      .card-link:hover span { @apply translate-x-1; }
+      .now-item { @apply flex gap-3 text-ink; }
+      .now-item::before { content: ''; @apply mt-2.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-tide; }
+    }
+  </style>
+
+  <script>
+    // All content comes from projects.json — edit that file to update the site.
+    const STATUS = {
+      'live':        { label: 'Live',        color: 'text-tide-300' },
+      'in-progress': { label: 'In progress', color: 'text-ember' },
+      'idea':        { label: 'Idea',        color: 'text-ink-muted' },
+      'archived':    { label: 'Archived',    color: 'text-ink-faint' },
+    };
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    const watch = (root = document) => root.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+
+    function projectCard(p, i) {
+      const s = STATUS[p.status] || STATUS.idea;
+      const media = p.image
+        ? `<img src="${esc(p.image)}" alt="" loading="lazy"><div class="tint"></div><div class="shade"></div>`
+        : `<div class="cover absolute inset-0"></div><div class="cover-grid absolute inset-0"></div><span class="monogram" aria-hidden="true">${esc(p.name).slice(0, 2)}</span>`;
+      const links = (p.links || []).map((l) => `<a href="${esc(l.url)}" class="card-link" target="_blank" rel="noopener">${esc(l.label)} <span aria-hidden="true">→</span></a>`).join('');
+      return `
+        <article class="reveal card" style="transition-delay:${(i % 3) * 0.06}s">
+          <div class="media">${media}<span class="status ${s.color}">${s.label}</span></div>
+          <div class="flex flex-1 flex-col p-6">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-display text-3xl font-800 uppercase leading-none">${esc(p.name)}</h3>
+              ${p.year ? `<span class="text-xs font-600 text-ink-faint">${esc(p.year)}</span>` : ''}
+            </div>
+            <p class="mt-3 flex-1 text-sm text-ink-muted">${esc(p.description)}</p>
+            ${(p.tags || []).length ? `<div class="mt-5 flex flex-wrap gap-2">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+            ${links ? `<div class="mt-5 flex flex-wrap gap-5 border-t border-white/5 pt-4">${links}</div>` : ''}
+          </div>
+        </article>`;
+    }
+
+    function render(data) {
+      const { profile = {}, projects = [] } = data;
+      document.querySelectorAll('[data-bind]').forEach((el) => {
+        const v = el.dataset.bind === 'activeCount' ? projects.filter((p) => p.status === 'in-progress').length : profile[el.dataset.bind];
+        if (v !== undefined) el.textContent = v;
+      });
+      document.title = `${profile.name || profile.brand} — Projects`;
+      document.querySelector('[data-list="now"]').innerHTML = (profile.now || []).map((t) => `<li class="now-item">${esc(t)}</li>`).join('');
+      document.querySelector('[data-list="about"]').innerHTML = (profile.about || []).map((t) => `<p>${esc(t)}</p>`).join('');
+      document.querySelector('[data-list="links"]').innerHTML = (profile.links || []).map((l, i) => `<a href="${esc(l.url)}" class="${i === 0 ? 'btn-primary' : 'btn-ghost'} px-6 py-3" ${l.url.startsWith('mailto:') ? '' : 'target="_blank" rel="noopener"'}>${esc(l.label)}</a>`).join('');
+
+      // Featured first, then newest
+      const sorted = [...projects].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.year || 0) - (a.year || 0));
+      const used = Object.keys(STATUS).filter((k) => sorted.some((p) => p.status === k));
+      const filters = document.getElementById('filters');
+      filters.innerHTML = [['all', 'All', sorted.length], ...used.map((k) => [k, STATUS[k].label, sorted.filter((p) => p.status === k).length])]
+        .map(([k, label, n]) => `<button class="chip" data-filter="${k}" aria-pressed="${k === 'all'}">${label} <span class="chip-count">${n}</span></button>`).join('');
+
+      const grid = document.getElementById('projectGrid'), empty = document.getElementById('emptyState');
+      const show = (key) => {
+        const list = key === 'all' ? sorted : sorted.filter((p) => p.status === key);
+        grid.innerHTML = list.map(projectCard).join('');
+        // 2 or 4 cards read better as a 2-up grid than a 3-up grid with a gap
+        grid.classList.toggle('lg:grid-cols-3', !(list.length === 2 || list.length === 4));
+        grid.classList.toggle('lg:grid-cols-2', list.length === 2 || list.length === 4);
+        empty.classList.toggle('hidden', list.length > 0);
+        watch(grid);
+      };
+      filters.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-filter]'); if (!b) return;
+        filters.querySelectorAll('[data-filter]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+        show(b.dataset.filter);
+      });
+      show('all');
+    }
+
+    fetch('projects.json', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then(render)
+      .catch(() => {
+        const empty = document.getElementById('emptyState');
+        empty.textContent = 'Could not load projects.json — open this site through a web server (node serve.mjs), not as a file.';
+        empty.classList.remove('hidden');
+      })
+      .finally(() => watch());
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const btn = document.getElementById('menuBtn'), menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => { const open = !menu.classList.toggle('hidden'); btn.setAttribute('aria-expanded', open); });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.classList.add('hidden'); btn.setAttribute('aria-expanded', false); }));
+  </script>
+</body>
+</html>

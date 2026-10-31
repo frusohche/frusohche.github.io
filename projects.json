@@ -1,0 +1,57 @@
+{
+  "profile": {
+    "name": "Frusoh Harris Che",
+    "brand": "Ambition",
+    "tagline": "I build tools for the way I actually live — planning, money, music and whatever comes next.",
+    "now": [
+      "Shipping the next version of Planner",
+      "Turning my trading routine into a repeatable system",
+      "Building a DJ toolkit for my own sets"
+    ],
+    "about": [
+      "Student and builder. I make small, sharp tools that solve my own problems first, then polish the ones worth sharing.",
+      "This site is the home base for everything I build — what's live, what's in progress, and what's next."
+    ],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/frusohche" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/frusoh-che-67a50a1a7" },
+      { "label": "Email", "url": "mailto:harrische0@gmail.com" }
+    ]
+  },
+
+  "projects": [
+    {
+      "name": "Planner",
+      "status": "in-progress",
+      "year": 2026,
+      "description": "A personal planner for organizing tasks, schedules and goals in one place.",
+      "tags": ["Productivity", "Web"],
+      "links": [],
+      "featured": true
+    },
+    {
+      "name": "DJ",
+      "status": "in-progress",
+      "year": 2026,
+      "description": "A music project for building and managing DJ sets.",
+      "tags": ["Music", "Tools"],
+      "links": []
+    },
+    {
+      "name": "Trading Routine",
+      "status": "in-progress",
+      "year": 2026,
+      "description": "A daily trading routine — checklists, notes and review in a repeatable system.",
+      "tags": ["Finance", "Automation"],
+      "links": []
+    },
+    {
+      "name": "Tax",
+      "status": "in-progress",
+      "year": 2026,
+      "description": "A tool for organizing documents and numbers for tax season.",
+      "tags": ["Finance", "Tools"],
+      "links": []
+    }
+  ]
+}
