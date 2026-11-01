@@ -1,11 +1,11 @@
 # Custom domain for the Ambition site (saved for later)
 
 ## Context
-The site is live at https://frusohche.github.io (GitHub Pages, repo `frusohche/frusohche.github.io`). Frusoh wants a real brand link instead, but isn't buying one yet. They asked to plan it now and save it for later. They chose a **brand-style** name ("Ambition").
+The site is live at https://frusohche.github.io (GitHub Pages, repo `frusohche/frusohche.github.io`). Fru-Soh wants a real brand link instead, but isn't buying one yet. They asked to plan it now and save it for later. They chose a **brand-style** name ("Ambition").
 
 **Status:** saved for later. Nothing is bought or configured yet. When a domain is bought, ask Claude to "connect my domain" and it will follow steps 4–5.
 
-## 1. Pick and buy the domain (Frusoh does this; about $10–15/yr)
+## 1. Pick and buy the domain (Fru-Soh does this; about $10–15/yr)
 - Candidates, in order of preference:
   - ambition.build
   - buildwithambition.com
@@ -37,7 +37,7 @@ On Cloudflare, set these records to **DNS only** (grey cloud) so GitHub can issu
 - Update README.md: list the live URL and keep the DNS table for reference.
 - Check that nothing hard-codes `frusohche.github.io`: search index.html, projects.json and README.md. No changes are expected, since every path is relative.
 - No changes are needed to the nightly jobs. `.github/workflows/daily-sync.yml` commits only `activity.json`, and the Claude routine `trig_01TpbrXetTqADWejYTQMK2Wd` pushes only `activity.json` and `log.json`, so neither touches `CNAME`.
-- Commit and push after Frusoh says yes.
+- Commit and push after Fru-Soh says yes.
 
 ## 5. Turn it on in GitHub
 Repo → Settings → Pages → Custom domain: enter the domain and save. Wait for the DNS check to pass and the certificate to be issued, usually minutes and up to 24 hours. Then tick **Enforce HTTPS**.
