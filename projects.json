@@ -38,7 +38,12 @@
         "Productivity",
         "Web"
       ],
-      "links": [],
+      "links": [
+        {
+          "label": "Dashboard",
+          "url": "https://claude.ai/artifact/SPWUBJEh4rHLm7S9qPTN9a"
+        }
+      ],
       "featured": true
     },
     {
@@ -63,7 +68,12 @@
         "Finance",
         "Automation"
       ],
-      "links": []
+      "links": [
+        {
+          "label": "Dashboard",
+          "url": "https://claude.ai/artifact/X2BeKgey18MSXL4QjSWV2Y"
+        }
+      ]
     },
     {
       "name": "Tax",
