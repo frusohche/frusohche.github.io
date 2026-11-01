@@ -45,3 +45,7 @@ node screenshot.mjs http://localhost:3000 label
 ```
 
 Saves to `temporary screenshots/`.
+
+## Custom domain (planned)
+
+The site is at https://frusohche.github.io for now. The steps to move it to a brand domain are in [`DOMAIN-PLAN.md`](DOMAIN-PLAN.md).
