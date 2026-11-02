@@ -1,10 +1,10 @@
 [
   {
     "date": "2026-11-01",
-    "summary": "Steady Sunday on the DJ board, with small updates to Planner and Trading Routine.",
+    "summary": "Steady Sunday on the DJ board, with updates to Planner and Trading Routine.",
     "items": [
-      "DJ: 4 commits — added the DJ board with per-deck EQ, filter, echo, stems and Auto/Manual mixing, plus scrolling waveforms and an Ambition-branded restyle",
-      "Planner: 2 commits",
+      "DJ: 4 commits \u2014 added the DJ board with per-deck EQ, filter, echo, stems and Auto/Manual mixing, plus scrolling waveforms and an Ambition-branded restyle",
+      "Planner: 3 commits",
       "Trading Routine: 2 commits"
     ]
   },
